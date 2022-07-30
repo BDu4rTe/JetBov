@@ -7,13 +7,15 @@ print("----------/----------/----------/----------/----------")
 
 print("Selecione o que deseja fazer seguindo a legenda abaixo.")
 bv = mostrar_opcoes()
+areas = []
+animais = []
 
 if bv == "1":
     cadastro_area = cadastrar_area({})
 elif bv == "2":
-    cadastrar_animal({})
+    cadastro_animais = cadastrar_animal({})
 elif bv == "3":
-    movimenta_animais()
+    movimenta_animais({}, areas, animais)
 elif bv == "4":
     engorda()
 else:
@@ -21,3 +23,4 @@ else:
     mostrar_opcoes()
 
 areas = [cadastro_area]
+animais = [cadastro_animais]

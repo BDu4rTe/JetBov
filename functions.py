@@ -13,7 +13,8 @@ def cadastrar_area(area):
         if valida_1:
             area["capacidade_max"] = capacidade
         else:
-            msg = cria_menssagem("Valor inválido. Somente numeros positivos")
+            msg = cria_menssagem(
+                "Valor inválido. Somente numeros positivos", "valor")
             if msg:
                 cadastrar_area(area)
             else:
@@ -27,11 +28,12 @@ def cadastrar_area(area):
         if valida_2:
             area["gmd"] = gmd
             print(
-                f"{area['nome']} com o maximo de {area['capacidade_max']} e GMD de \
-                {area['gmd']}")
+                f"{area['nome']} com o maximo de {area['capacidade_max']} \
+animais e GMD de {area['gmd']}")
             print(f"Area {area['nome']} foi cadastrada com sucesso.\n")
         else:
-            msg_2 = cria_menssagem("Valor inválido. Somente numeros positivos")
+            msg_2 = cria_menssagem(
+                "Valor inválido. Somente numeros positivos", "valor")
             if msg_2:
                 cadastrar_area(area)
             else:
@@ -42,6 +44,7 @@ def cadastrar_area(area):
 
 
 def cadastrar_animal(animal):
+
     if "brinco" not in animal:
         brinco = input("Insira o brinco da animal: ")
         animal["brinco"] = brinco
@@ -52,7 +55,8 @@ def cadastrar_animal(animal):
         if valida_1:
             animal["peso_inicial"] = peso_inicial
         else:
-            msg = cria_menssagem("Valor inválido. Somente numeros positivos")
+            msg = cria_menssagem(
+                "Valor inválido. Somente numeros positivos", "valor")
             if msg:
                 cadastrar_animal(animal)
             else:
@@ -62,8 +66,47 @@ def cadastrar_animal(animal):
     return animal
 
 
-def movimenta_animais():
-    return "movimento"
+def movimenta_animais(movimento, animais, areas):
+
+    animal = input("Qual animal voce quer movimentar ? ")
+    if animal in animais:
+        movimento["animal"] = animal
+    else:
+        msg = cria_menssagem("Animal inexistente", "animal")
+        if msg:
+            movimenta_animais(movimento)
+        else:
+            print("Cancelando movimento...")
+            return
+
+    area = input("Para qual esse animal vai ? ")
+    if area in areas:
+        movimento["area"] = area
+    else:
+        msg_2 = cria_menssagem("Area inexistente", "area")
+        if msg_2:
+            movimenta_animais(movimento)
+        else:
+            print("Cancelando movimento...")
+            return
+
+    dias = input("Por quantos dias o animal vai ficar na area ? ")
+    valida_1 = valida_dados(dias, False)
+    if valida_1:
+        movimento["dias"] = dias
+        print(
+            f"Animal {movimento['animal']} foi para {movimento['area']} por\
+            {movimento['dias']} dias.\n")
+    else:
+        msg_3 = cria_menssagem(
+            "Valor inválido. Somente numeros positivos", "valor")
+        if msg_3:
+            movimenta_animais(movimento)
+        else:
+            print("Cancelando movimento...")
+            return
+
+    return movimento
 
 
 def engorda():
