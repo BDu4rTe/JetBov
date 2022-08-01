@@ -11,19 +11,51 @@ def valida_dados(valor_a_checar, range, valores_validos=[]):
     return valido
 
 
-def cria_menssagem(msg, tipo):
-    resposta = input(
-        f"{msg}\nDeseja informar um novo {tipo}? [s] para sim OU [n] para nao.")
-
+def cria_menssagem(msg, info, tipo):
+    if tipo == "info":
+        resposta = input(
+            f"{msg}\nDeseja informar um novo {info}? [s] => sim OU [n] => nao ")
+    if tipo == "conf":
+        resposta = input(
+            f"{msg}\nDeseja mesmo {info}? [s] para sim OU [n] para nao ")
     if resposta == "s":
-        print("True")
         return True
     elif resposta == "n":
-        print("False")
         return False
     else:
         print("Opcao invalida digite um valor de acordo com as legendas.")
-        cria_menssagem(msg, tipo)
+        cria_menssagem(msg, info, tipo)
+
+
+def verifica_listas(lista_a, lista_b, tipo_a, tipo_b):
+    if len(lista_a) == 0 and len(lista_b) == 0:
+        print("Voce nao cadastrou nada ainda!")
+        return False
+    if len(lista_a) == 0:
+        print(f"Voce nao cadastrou {tipo_a} ainda!")
+        return False
+    if len(lista_b) == 0:
+        print(f"Voce nao cadastrou {tipo_b} ainda!")
+        return False
+    else:
+        return True
+
+
+def calcula_peso_final(animal, area, dias):
+    return int(animal["peso_final"]) + \
+        (int(animal["peso_inicial"]) + (int(area["gmd"]) * int(dias)))
+
+
+# def salva_dados(dados, tipo):
+#     animais = []
+#     areas = []
+#     if tipo == "area":
+#         areas.append(dados)
+#         print(areas)
+#         return areas
+#     if tipo == "animal":
+#         animais.append(dados)
+#         return animais
 
 # direciona_opcao = {
 #     1: cadastrar_area(),
