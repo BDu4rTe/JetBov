@@ -14,7 +14,7 @@ def valida_dados(valor_a_checar, range, valores_validos=[]):
 def cria_menssagem(msg, info, tipo):
     if tipo == "info":
         resposta = input(
-            f"{msg}\nDeseja informar um novo {info}? [s] => sim OU [n] => nao ")
+            f"{msg}\nDeseja informar um(a) novo {info}? [s] => sim OU [n] => nao ")
     if tipo == "conf":
         resposta = input(
             f"{msg}\nDeseja mesmo {info}? [s] para sim OU [n] para nao ")
@@ -41,10 +41,24 @@ def verifica_listas(lista_a, lista_b, tipo_a, tipo_b):
         return True
 
 
-def calcula_peso_final(animal, area, dias):
-    return int(animal["peso_final"]) + \
-        (int(animal["peso_inicial"]) + (int(area["gmd"]) * int(dias)))
+def calcula_peso_final(peso, gmd, dias):
+    return int(peso) + (int(gmd) * int(dias))
 
+
+def varre_lista(lista, bool, key, key_2=None, quantidade=None):
+    retorno = []
+    if bool:
+        for d in lista:
+            if d['nome'] == key:
+                print(d)
+                return d
+    if quantidade == 1:
+        for dicionarios in lista:
+            retorno.append(dicionarios[key])
+    if quantidade == 2:
+        for dicionarios in lista:
+            print(dicionarios[key], dicionarios[key_2])
+    return retorno
 
 # def salva_dados(dados, tipo):
 #     animais = []

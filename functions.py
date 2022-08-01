@@ -1,4 +1,5 @@
-from utils import valida_dados, cria_menssagem, verifica_listas, calcula_peso_final
+from utils import valida_dados, cria_menssagem, verifica_listas
+from utils import calcula_peso_final, varre_lista
 
 
 def cadastrar_area(area):
@@ -9,8 +10,8 @@ def cadastrar_area(area):
 
     if "capacidade_max" not in area:
         capacidade = input("Qual é o capacidade maxima da area: ")
-        valida_1 = valida_dados(capacidade, False)
-        if valida_1:
+        valida_cap = valida_dados(capacidade, False)
+        if valida_cap:
             area["capacidade_max"] = capacidade
         else:
             msg = cria_menssagem(
@@ -23,9 +24,9 @@ def cadastrar_area(area):
 
     if "gmd" not in area:
         gmd = input("Qual é o GMD (Ganho Medio Diario) da area: ")
-        valida_2 = valida_dados(gmd, False)
-        print(valida_2)
-        if valida_2:
+        valida_gmd = valida_dados(gmd, False)
+        print(valida_gmd)
+        if valida_gmd:
             area["gmd"] = gmd
             print(
                 f"{area['nome']} com o maximo de {area['capacidade_max']} \
@@ -45,17 +46,17 @@ animais e GMD de {area['gmd']}")
 
 def cadastrar_animal(animal):
 
-    if "brinco" not in animal:
+    if "nome" not in animal:
         brinco = input("Insira o brinco da animal: ")
-        animal["brinco"] = brinco
+        animal["nome"] = brinco
 
     if "peso_inicial" not in animal:
         peso_inicial = input("Qual é o peso inicial do animal: ")
-        valida_1 = valida_dados(peso_inicial, False)
-        if valida_1:
+        valida_peso = valida_dados(peso_inicial, False)
+        if valida_peso:
             animal["peso_inicial"] = peso_inicial
             print(
-                f"Animal {animal['brinco']} de peso {animal['peso_inicial']}Kg")
+                f"Animal {animal['nome']} de peso {animal['peso_inicial']}Kg")
         else:
             msg = cria_menssagem(
                 "Valor inválido. Somente numeros positivos", "valor", "info")
@@ -76,10 +77,10 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
     if lista_check is False:
         return
     else:
-        print(lista_animais)
-        varre = varrer_lista(lista_animais, "brinco")
+        varre_animais = varre_lista(lista_animais, False, "nome")
+        print(f"Animais: {varre_animais}")
         animal_input = input("Qual animal voce quer movimentar ? ")
-        if animal_input in varre:
+        if animal_input in varre_animais:
             movimento["animal"] = animal_input
         else:
             msg = cria_menssagem("Animal inexistente", "animal", "info")
@@ -88,26 +89,37 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
             else:
                 print("Cancelando movimento...")
                 return
-        for area in lista_areas:
-            print(f"Areas: {area['nome']}")
-            area_input = input("Para qual esse animal vai ? ")
-            if area_input in area["nome"]:
-                movimento["area"] = area_input
+        varre_areas_nome = varre_lista(lista_areas, False, "nome")
+        print(f"Areas: {varre_areas_nome}")
+        area_input = input("Para qual area esse animal vai ? ")
+        if area_input in varre_areas_nome:
+            movimento["area"] = area_input
+        else:
+            msg_2 = cria_menssagem("Area inexistente", "area", "info")
+            if msg_2:
+                movimenta_animais(movimento)
             else:
-                msg_2 = cria_menssagem("Area inexistente", "area", "info")
-                if msg_2:
-                    movimenta_animais(movimento)
-                else:
-                    print("Cancelando movimento...")
-                    return
+                print("Cancelando movimento...")
+                return
 
         dias = input("Por quantos dias o animal vai ficar na area ? ")
-        valida_1 = valida_dados(dias, False)
-        if valida_1:
+        valida_dias = valida_dados(dias, False)
+        if valida_dias:
             movimento["dias"] = dias
-            engorda = calcula_peso_final(animal, area, dias)
-            animal["peso_final"] = engorda
-            print(animal)
+            varre_area_dict = varre_lista(lista_areas, True, area_input)
+            area_gmd = varre_area_dict.get("gmd")
+
+            varre_animal_dict = varre_lista(lista_animais, True, animal_input)
+            animal_peso_i = varre_animal_dict.get("peso_inicial")
+
+            varre_animal_dict = varre_lista(lista_animais, True, animal_input)
+            animal_peso_f = varre_animal_dict.get("peso_final")
+
+            if animal_peso_f != 0:
+                engorda = calcula_peso_final(animal_peso_f, area_gmd, dias)
+            else:
+                engorda = calcula_peso_final(animal_peso_i, area_gmd, dias)
+
             print(
                 f"Animal {movimento['animal']} foi para {movimento['area']} por\
                 {movimento['dias']} dias.\n")
@@ -119,11 +131,31 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
             else:
                 print("Cancelando movimento...")
                 return
-    return
+
+    return engorda, varre_animal_dict
 
 
-def resultados():
-    return "engorda"
+def resultados(lista_animais):
+    opcao = input("Voce deseja ver como os resultados:\n\
+                    1. todos os animais.\n\
+                    2. animais especificos\n")
+    valida_opcao = valida_dados(opcao, True, [1, 2])
+
+    if valida_opcao:
+        if opcao == "1":
+            varre_tudo = varre_lista(
+                lista_animais, False, "nome", "peso_final", 2)
+            print(varre_tudo)
+        if opcao == "2":
+            pass
+    else:
+        msg = cria_menssagem(
+            "Opcao invalida, utilize os valores da legenda", "opcao", "info")
+        if msg:
+            resultados(lista_animais)
+        else:
+            print("Cancelando resultados...")
+            return
 
 
 def mostrar_opcoes(lista_areas, lista_animais):
@@ -141,10 +173,10 @@ def mostrar_opcoes(lista_areas, lista_animais):
         cadastro_animais = cadastrar_animal({})
         return cadastro_animais, "animal"
     elif opcao == "3":
-        movimento = movimenta_animais({}, lista_areas, lista_animais)
-        return movimento
+        resultado_movimento = movimenta_animais({}, lista_areas, lista_animais)
+        return resultado_movimento
     elif opcao == "4":
-        resultados()
+        resultados(lista_animais)
     elif opcao == "5":
         msg = cria_menssagem("Voce escolheu sair da aplicao", "sair", "conf")
         if msg:
