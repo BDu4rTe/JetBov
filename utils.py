@@ -45,19 +45,35 @@ def calcula_peso_final(peso, gmd, dias):
     return int(peso) + (int(gmd) * int(dias))
 
 
-def varre_lista(lista, bool, key, key_2=None, quantidade=None):
+def varre_lista(lista, bool, key, opcao=None, key_2=None):
     retorno = []
     if bool:
         for d in lista:
-            if d['nome'] == key:
-                print(d)
+            if d["nome"] == key:
                 return d
-    if quantidade == 1:
+    if opcao == 1:
         for dicionarios in lista:
             retorno.append(dicionarios[key])
-    if quantidade == 2:
+    if opcao == 2:
         for dicionarios in lista:
             print(dicionarios[key], dicionarios[key_2])
+    if opcao == 3:
+        for d in lista:
+            if d["nome"] == key:
+                return d["nome"], d["peso_final"]
+    # if opcao == 3:
+    #     for d in lista:
+    #         for item in key:
+    #             print(item)
+    #             if d['nome'] == item:
+    #                 print(d)
+    #                 retorno.append(d)
+    #     for d in lista:
+    #         for item in key_2:
+    #             print(item)
+    #             if d['nome'] == item:
+    #                 print(d)
+    #                 retorno.append(d)
     return retorno
 
 # def salva_dados(dados, tipo):

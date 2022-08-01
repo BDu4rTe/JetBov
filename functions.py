@@ -89,7 +89,7 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
             else:
                 print("Cancelando movimento...")
                 return
-        varre_areas_nome = varre_lista(lista_areas, False, "nome")
+        varre_areas_nome = varre_lista(lista_areas, False, "nome", 1)
         print(f"Areas: {varre_areas_nome}")
         area_input = input("Para qual area esse animal vai ? ")
         if area_input in varre_areas_nome:
@@ -137,17 +137,29 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
 
 def resultados(lista_animais):
     opcao = input("Voce deseja ver como os resultados:\n\
-                    1. todos os animais.\n\
-                    2. animais especificos\n")
+        1. todos os animais.\n\
+        2. animais especificos\n")
     valida_opcao = valida_dados(opcao, True, [1, 2])
 
     if valida_opcao:
         if opcao == "1":
             varre_tudo = varre_lista(
-                lista_animais, False, "nome", "peso_final", 2)
+                lista_animais, False, "nome", "peso_final", 3)
             print(varre_tudo)
         if opcao == "2":
-            pass
+            animais_nomes = varre_lista(lista_animais, False, "nome", 1)
+            print(animais_nomes)
+            seleciona_animais = input(
+                "Quais animais desjea ver os resultados? ")
+            nomes_animais = seleciona_animais.split(",")
+            nomes_busca = [x for x in nomes_animais]
+            for nome in nomes_busca:
+                if nome in animais_nomes:
+                    pega_dicionarios = varre_lista(
+                        lista_animais, False, nome, 3)
+                    del(nomes_busca[0])
+                    print(pega_dicionarios)
+
     else:
         msg = cria_menssagem(
             "Opcao invalida, utilize os valores da legenda", "opcao", "info")
