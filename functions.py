@@ -7,7 +7,6 @@ def cadastrar_area(area, lista_areas):
     if "nome" not in area:
         nome = input("Insira o nome da area: ")
         area_existe = varre_lista(lista_areas, "nome", 1, nome)
-        area["nome"] = nome
         if area_existe:
             msg = cria_menssagem(
                 "Area ja cadastrada.", "inserir um nome diferente")
@@ -16,6 +15,8 @@ def cadastrar_area(area, lista_areas):
             else:
                 print("Cancelando cadastro...")
                 return
+        else:
+            area["nome"] = nome
 
     if "capacidade_max" not in area:
         capacidade = input("Qual é o capacidade maxima da area: ")

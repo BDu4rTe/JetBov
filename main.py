@@ -31,6 +31,5 @@ if __name__ == "__main__":
             for animal in lista_animais:
                 if animal["nome"] == v:
                     animal["peso_final"] = dados[0]
-
         print(lista_areas)
         print(lista_animais)
