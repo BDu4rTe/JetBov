@@ -1,12 +1,10 @@
-from typing import Any
-
-
 def valida_dados(valor_a_checar, range, valores_validos=[]):
     """
     Verifica dados.
     param valor_a_checar : Any
     param range : bool
-    param valores_validos : list
+    param valores_validos : list\n
+    return = bool
     """
     valido = False
     if valor_a_checar.isnumeric():
@@ -27,7 +25,7 @@ def cria_menssagem(msg, msg_2):
     Ela vai dar um print:\n
     {msg}\n
     Deseja {msg_2} ? [s] => sim OU [n] => nao\n
-    E vai retornar um bool.
+    return = bool
     """
     resposta = input(
         f"{msg}\nDeseja {msg_2}? [s] => sim OU [n] => nao ")
@@ -51,7 +49,7 @@ def verifica_listas(lista_a, lista_b, tipo_a, tipo_b):
     param tipo_b : str\n
     Ela vai da um print:\n
     Voce nao cadastrou {tipo_n} ainda!\n
-    E vai retornar um bool.
+    return = bool
     """
     if len(lista_a) == 0 and len(lista_b) == 0:
         print("Voce nao cadastrou nada ainda!")
@@ -73,7 +71,7 @@ def calcula_peso_final(peso, gmd, dias):
     param gmd : int
     param dias : int
 
-    Ela retorna um int 
+    return = int
     """
     return int(peso) + (int(gmd) * int(dias))
 
@@ -93,9 +91,7 @@ def varre_lista(lista, key, opcao, key_2=None):
     dicionario na {lista}\n
     opcao = 4 : pega os calores das chaves {key} e {key_2} de cada
     dicionario na {lista}\n
-
-    Retorna uma lista
-
+    return = []
     """
     retorno = []
     if opcao == 1:
@@ -114,20 +110,18 @@ def varre_lista(lista, key, opcao, key_2=None):
             retorno.append(d[key_2])
     return retorno
 
-# def salva_dados(dados, tipo):
-#     animais = []
-#     areas = []
-#     if tipo == "area":
-#         areas.append(dados)
-#         print(areas)
-#         return areas
-#     if tipo == "animal":
-#         animais.append(dados)
-#         return animais
 
-# direciona_opcao = {
-#     1: cadastrar_area(),
-#     2: cadastrar_animal(),
-#     3: movimenta_animais(),
-#     4: engorda()
-# }
+def mostra_resultado(lista):
+    """
+    Imprimi os resultados de uma lista.
+    param lista : list
+    """
+    condicao = len(lista)/2
+    c = 0
+    c_2 = 1
+    while condicao > 0:
+        print(
+            f"O animal {lista[c]} ficou com o peso final de {lista[c_2]}Kg.")
+        c += 2
+        c_2 += 2
+        condicao -= 1
