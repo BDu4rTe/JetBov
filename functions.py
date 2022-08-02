@@ -3,7 +3,14 @@ from utils import calcula_peso_final, varre_lista
 
 
 def cadastrar_area(area, lista_areas):
+    """
+    Faz o cadastro das areas utilizando os inputs do usuario.
+    param area : dict
+    param lista_areas : list
 
+    Retorna o dict area.\n
+    return = {}
+    """
     if "nome" not in area:
         nome = input("Insira o nome da area: ")
         area_existe = varre_lista(lista_areas, "nome", 1, nome)
@@ -44,8 +51,8 @@ def cadastrar_area(area, lista_areas):
 animais e GMD de {area['gmd']}")
             print(f"Area {area['nome']} foi cadastrada com sucesso.\n")
         else:
-            msg_3 = cria_menssagem(
-                "Valor inválido. Somente numeros positivos", "valor", "info")
+            msg_3 = cria_menssagem("Valor inválido. Somente numeros positivos",
+                                   "inserir um novo valor")
             if msg_3:
                 cadastrar_area(area, lista_areas)
             else:
@@ -55,11 +62,27 @@ animais e GMD de {area['gmd']}")
     return area
 
 
-def cadastrar_animal(animal):
+def cadastrar_animal(animal, lista_animais):
+    """
+    Faz o cadastro dos animais utilizando os inputs do usuario.
+    param animal : dict
 
+    Retorna o dict animal.\n
+    return = {}
+    """
     if "nome" not in animal:
         brinco = input("Insira o brinco da animal: ")
-        animal["nome"] = brinco
+        animal_existe = varre_lista(lista_animais, "nome", 1, brinco)
+        if animal_existe:
+            msg = cria_menssagem(
+                "Animal ja cadastrado.", "inserir um brinco diferente")
+            if msg:
+                cadastrar_animal(animal, lista_animais)
+            else:
+                print("Cancelando cadastro...")
+                return
+        else:
+            animal["nome"] = brinco
 
     if "peso_inicial" not in animal:
         peso_inicial = input("Qual é o peso inicial do animal: ")
@@ -70,7 +93,8 @@ def cadastrar_animal(animal):
                 f"Animal {animal['nome']} de peso {animal['peso_inicial']}Kg")
         else:
             msg = cria_menssagem(
-                "Valor inválido. Somente numeros positivos", "valor", "info")
+                "Valor inválido. Somente numeros positivos",
+                "inserir um novo valor")
             print(msg)
             if msg:
                 cadastrar_animal(animal)
@@ -83,10 +107,17 @@ def cadastrar_animal(animal):
 
 def movimenta_animais(movimento, lista_areas, lista_animais):
     """
-    Faz a movimentacao dos animais.
+    Faz a movimentacao dos animais.\n
     Pede alguns dados para o usuario e com esses dados
     ela imprime a movimentacao e retorna o peso final do animal e o
     dicionario ao qual ele pertence.
+    param movimento : dict
+    param lista_areas : list
+    param lista_animais : list
+
+    Retorna uma tupla com peso final do animal e o dicionario ao
+    qual ele pertence.\n
+    return = (int, {})
     """
     lista_check = verifica_listas(
         lista_areas, lista_animais, "areas", "animais")
@@ -99,7 +130,8 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
         if animal_input in varre_animais:
             movimento["animal"] = animal_input
         else:
-            msg = cria_menssagem("Animal inexistente", "animal", "info")
+            msg = cria_menssagem("Animal inexistente",
+                                 "inserir um novo animal")
             if msg:
                 movimenta_animais(movimento)
             else:
@@ -111,7 +143,8 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
         if area_input in varre_areas_nome:
             movimento["area"] = area_input
         else:
-            msg_2 = cria_menssagem("Area inexistente", "area", "info")
+            msg_2 = cria_menssagem("Area inexistente",
+                                   "inserir uma nova area")
             if msg_2:
                 movimenta_animais(movimento)
             else:
@@ -142,7 +175,8 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
                 {movimento['dias']} dias.\n")
         else:
             msg_3 = cria_menssagem(
-                "Valor inválido. Somente numeros positivos", "valor", "info")
+                "Valor inválido. Somente numeros positivos",
+                "inserir um novo valor")
             if msg_3:
                 movimenta_animais(movimento)
             else:
@@ -154,6 +188,10 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
 
 
 def resultados(lista_animais):
+    """
+    Exibe os resultados do pastejo rotacionado.
+    param lista_animais : list
+    """
     opcao = input("Voce deseja ver como os resultados:\n\
         1. todos os animais.\n\
         2. animais especificos\n")
@@ -182,7 +220,8 @@ def resultados(lista_animais):
 
     else:
         msg = cria_menssagem(
-            "Opcao invalida, utilize os valores da legenda", "opcao", "info")
+            "Opcao invalida, utilize os valores da legenda",
+            "inserir uma nova opcao")
         if msg:
             resultados(lista_animais)
         else:
@@ -202,7 +241,7 @@ def mostrar_opcoes(lista_areas, lista_animais):
         cadastro_area = cadastrar_area({}, lista_areas)
         return cadastro_area, "area"
     elif opcao == "2":
-        cadastro_animais = cadastrar_animal({})
+        cadastro_animais = cadastrar_animal({}, lista_animais)
         return cadastro_animais, "animal"
     elif opcao == "3":
         resultado_movimento = movimenta_animais({}, lista_areas, lista_animais)

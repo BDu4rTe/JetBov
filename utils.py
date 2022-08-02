@@ -32,10 +32,10 @@ def cria_menssagem(msg, msg_2):
     resposta = input(
         f"{msg}\nDeseja {msg_2}? [s] => sim OU [n] => nao ")
     if resposta == "s":
-        print("sim krl")
+        print("sim")
         return True
     elif resposta == "n":
-        print("nao prr")
+        print("nao")
         return False
     else:
         print("Opcao invalida digite um valor de acordo com as legendas.")
