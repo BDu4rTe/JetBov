@@ -31,11 +31,11 @@ def cadastrar_area(area, lista_areas):
         if valida_cap:
             area["capacidade_max"] = capacidade
         else:
-            msg_i = cria_menssagem(
+            msg_2 = cria_menssagem(
                 "Valor inválido. Somente numeros positivos",
                 "inserir um novo valor")
-            print(msg_i)
-            if msg_i:
+            print(msg_2)
+            if msg_2:
                 cadastrar_area(area, lista_areas)
             else:
                 print("Cancelando cadastro...")
