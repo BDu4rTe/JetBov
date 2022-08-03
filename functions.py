@@ -175,7 +175,7 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
                 engorda = calcula_peso_final(animal_peso_i, area_gmd, dias)
 
             print(
-                f"Animal {movimento['animal']} foi para {movimento['area']}\
+                f"Animal {movimento['animal']} foi para {movimento['area']} \
 por {movimento['dias']} dias.\n")
         else:
             msg_3 = cria_menssagem(
@@ -211,8 +211,8 @@ def resultados(lista_animais):
         if opcao == "2":
             animais_nomes = varre_lista(lista_animais, "nome", 2)
             print(animais_nomes)
-            seleciona_animais = input(
-                "Quais animais deseja ver os resultados? ")
+            seleciona_animais = input("Quais animais deseja ver os resultados? \
+Use ',' para separar caso seja mais de um animal.\n")
             nomes_animais = seleciona_animais.split(",")
             nomes_busca = [x for x in nomes_animais]
             resultado_busca = []
@@ -224,10 +224,9 @@ def resultados(lista_animais):
                     resultado_busca.append(pega_dicionarios)
             for x in resultado_busca:
                 v = varre_lista(x, "nome", 4, "peso_final")
-                print("#####")
+                print(v)
                 mostra_resultado(v)
-                return "Resultado"
-
+        return "Resultado"
     else:
         msg = cria_menssagem(
             "Opcao invalida, utilize os valores da legenda",
@@ -275,6 +274,7 @@ def mostrar_opcoes(lista_areas, lista_animais):
     elif opcao == "5":
         msg = cria_menssagem("Voce escolheu sair da aplicao",
                              "mesmo sair")
+        print(msg)
         if msg:
             print("Saindo da aplicacao...")
             return False
