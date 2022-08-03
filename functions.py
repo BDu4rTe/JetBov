@@ -193,7 +193,8 @@ por {movimento['dias']} dias.\n")
 def resultados(lista_animais):
     """
     Exibe os resultados do pastejo rotacionado.
-    param lista_animais : list
+    param lista_animais : list\n
+    return => None
     """
     opcao = input("Voce deseja ver como os resultados:\n\
         1. todos os animais.\n\
@@ -206,6 +207,7 @@ def resultados(lista_animais):
             varre_tudo = varre_lista(
                 lista_animais, "nome", 4, "peso_final")
             mostra_resultado(varre_tudo)
+            return "Resultado"
         if opcao == "2":
             animais_nomes = varre_lista(lista_animais, "nome", 2)
             print(animais_nomes)
@@ -224,6 +226,7 @@ def resultados(lista_animais):
                 v = varre_lista(x, "nome", 4, "peso_final")
                 print("#####")
                 mostra_resultado(v)
+                return "Resultado"
 
     else:
         msg = cria_menssagem(
@@ -234,9 +237,16 @@ def resultados(lista_animais):
         else:
             print("Cancelando resultados...")
             return
+    return "Resutado"
 
 
 def mostrar_opcoes(lista_areas, lista_animais):
+    """
+    Mostra o menu de opcoes que o usuario tem no simulador.
+    param lista_areas : list
+    param lista_animais : list\n
+    return => ({}, str) | (int, {}) | False
+    """
     print("\nSelecione o que deseja fazer seguindo a legenda abaixo.")
     opcao = input("\
         1. cadastrar uma area;\n\
@@ -246,15 +256,22 @@ def mostrar_opcoes(lista_areas, lista_animais):
         5. sair.\n")
     if opcao == "1":
         cadastro_area = cadastrar_area({}, lista_areas)
-        return cadastro_area, "area"
+        if cadastro_area is None:
+            return "Cancela"
+        else:
+            return cadastro_area, "area"
     elif opcao == "2":
         cadastro_animais = cadastrar_animal({}, lista_animais)
-        return cadastro_animais, "animal"
+        if cadastro_animais is None:
+            return "Cancela"
+        else:
+            return cadastro_animais, "animal"
     elif opcao == "3":
         resultado_movimento = movimenta_animais({}, lista_areas, lista_animais)
         return resultado_movimento
     elif opcao == "4":
-        resultados(lista_animais)
+        resultado = resultados(lista_animais)
+        return resultado
     elif opcao == "5":
         msg = cria_menssagem("Voce escolheu sair da aplicao",
                              "mesmo sair")
