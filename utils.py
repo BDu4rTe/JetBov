@@ -17,7 +17,7 @@ def valida_dados(valor_a_checar, range, valores_validos=[]):
     return valido
 
 
-def cria_menssagem(msg, msg_2):
+def cria_mensagem(msg, msg_2):
     """
     Cria mensagens que no final pede uma confirmacao ao usuario.
     param msg : str
@@ -30,14 +30,12 @@ def cria_menssagem(msg, msg_2):
     resposta = input(
         f"{msg}\nDeseja {msg_2}? [s] => sim OU [n] => nao ")
     if resposta == "s":
-        print("sim")
         return True
     elif resposta == "n":
-        print("nao")
         return False
     else:
         print("Opcao invalida digite um valor de acordo com as legendas.")
-        cria_menssagem(msg, msg_2)
+        return cria_mensagem(msg, msg_2)
 
 
 def verifica_listas(lista_a, lista_b, tipo_a, tipo_b):

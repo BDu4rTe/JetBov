@@ -1,4 +1,4 @@
-from utils import mostra_resultado, valida_dados, cria_menssagem
+from utils import mostra_resultado, valida_dados, cria_mensagem
 from utils import calcula_peso_final, varre_lista, verifica_listas
 
 
@@ -15,7 +15,7 @@ def cadastrar_area(area, lista_areas):
         nome = input("Insira o nome da area: ")
         area_existe = varre_lista(lista_areas, "nome", 1, nome)
         if area_existe:
-            msg = cria_menssagem(
+            msg = cria_mensagem(
                 "Area ja cadastrada.", "inserir um nome diferente")
             if msg:
                 cadastrar_area(area, lista_areas)
@@ -31,10 +31,9 @@ def cadastrar_area(area, lista_areas):
         if valida_cap:
             area["capacidade_max"] = capacidade
         else:
-            msg_2 = cria_menssagem(
+            msg_2 = cria_mensagem(
                 "Valor inválido. Somente numeros positivos",
                 "inserir um novo valor")
-            print(msg_2)
             if msg_2:
                 cadastrar_area(area, lista_areas)
             else:
@@ -52,8 +51,8 @@ def cadastrar_area(area, lista_areas):
 animais e GMD de {area['gmd']}")
             print(f"Area {area['nome']} foi cadastrada com sucesso.\n")
         else:
-            msg_3 = cria_menssagem("Valor inválido. Somente numeros positivos",
-                                   "inserir um novo valor")
+            msg_3 = cria_mensagem("Valor inválido. Somente numeros positivos",
+                                  "inserir um novo valor")
             if msg_3:
                 cadastrar_area(area, lista_areas)
             else:
@@ -75,7 +74,7 @@ def cadastrar_animal(animal, lista_animais):
         brinco = input("Insira o brinco da animal: ")
         animal_existe = varre_lista(lista_animais, "nome", 1, brinco)
         if animal_existe:
-            msg = cria_menssagem(
+            msg = cria_mensagem(
                 "Animal ja cadastrado.", "inserir um brinco diferente")
             if msg:
                 cadastrar_animal(animal, lista_animais)
@@ -93,7 +92,7 @@ def cadastrar_animal(animal, lista_animais):
             print(
                 f"Animal {animal['nome']} de peso {animal['peso_inicial']}Kg")
         else:
-            msg = cria_menssagem(
+            msg = cria_mensagem(
                 "Valor inválido. Somente numeros positivos",
                 "inserir um novo valor")
             print(msg)
@@ -131,8 +130,8 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
         if animal_input in varre_animais:
             movimento["animal"] = animal_input
         else:
-            msg = cria_menssagem("Animal inexistente",
-                                 "inserir um novo animal")
+            msg = cria_mensagem("Animal inexistente",
+                                "inserir um novo animal")
             if msg:
                 movimenta_animais(movimento, lista_areas, lista_animais)
             else:
@@ -144,8 +143,8 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
         if area_input in varre_areas_nome:
             movimento["area"] = area_input
         else:
-            msg_2 = cria_menssagem("Area inexistente",
-                                   "inserir uma nova area")
+            msg_2 = cria_mensagem("Area inexistente",
+                                  "inserir uma nova area")
             if msg_2:
                 movimenta_animais(movimento, lista_areas, lista_animais)
             else:
@@ -178,7 +177,7 @@ def movimenta_animais(movimento, lista_areas, lista_animais):
                 f"Animal {movimento['animal']} foi para {movimento['area']} \
 por {movimento['dias']} dias.\n")
         else:
-            msg_3 = cria_menssagem(
+            msg_3 = cria_mensagem(
                 "Valor inválido. Somente numeros positivos",
                 "inserir um novo valor")
             if msg_3:
@@ -228,7 +227,7 @@ Use ',' para separar caso seja mais de um animal.\n")
                 mostra_resultado(v)
         return "Resultado"
     else:
-        msg = cria_menssagem(
+        msg = cria_mensagem(
             "Opcao invalida, utilize os valores da legenda",
             "inserir uma nova opcao")
         if msg:
@@ -272,9 +271,8 @@ def mostrar_opcoes(lista_areas, lista_animais):
         resultado = resultados(lista_animais)
         return resultado
     elif opcao == "5":
-        msg = cria_menssagem("Voce escolheu sair da aplicao",
-                             "mesmo sair")
-        print(msg)
+        msg = cria_mensagem("Voce escolheu sair da aplicao",
+                            "mesmo sair")
         if msg:
             print("Saindo da aplicacao...")
             return False
