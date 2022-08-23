@@ -1,5 +1,3 @@
-:construction: Projeto em desenvolvimento  :construction:
-
 <h2 align=center>
   Simulador de pastejo rotacionado
 </h2>
